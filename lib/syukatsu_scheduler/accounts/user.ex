@@ -3,6 +3,7 @@ defmodule SyukatsuScheduler.Accounts.User do
   import Ecto.Changeset
 
   schema "users" do
+    field :username, :string
     field :email, :string
     field :password, :string, virtual: true, redact: true
     field :hashed_password, :string, redact: true
@@ -36,9 +37,16 @@ defmodule SyukatsuScheduler.Accounts.User do
   """
   def registration_changeset(user, attrs, opts \\ []) do
     user
-    |> cast(attrs, [:email, :password])
+    |> cast(attrs, [:username, :email, :password])
+    |> validate_username(opts)
     |> validate_email(opts)
     |> validate_password(opts)
+  end
+
+  defp validate_username(changeset, _opts) do
+    changeset
+    |> validate_required([:username])
+    |> validate_length(:username, max: 160)
   end
 
   defp validate_email(changeset, opts) do
