@@ -6,6 +6,8 @@ defmodule SyukatsuScheduler.Accounts.Company do
     field :name, :string
     field :url, :string
 
+    belongs_to :user, SyukatsuScheduler.Accounts.User
+
     timestamps()
   end
 

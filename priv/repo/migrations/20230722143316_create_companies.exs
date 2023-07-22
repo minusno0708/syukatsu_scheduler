@@ -6,6 +6,8 @@ defmodule SyukatsuScheduler.Repo.Migrations.CreateCompanies do
       add :name, :string
       add :url, :string
 
+      add :user_id, references(:users, on_delete: :nothing)
+
       timestamps()
     end
   end
