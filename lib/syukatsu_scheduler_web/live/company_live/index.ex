@@ -6,7 +6,8 @@ defmodule SyukatsuSchedulerWeb.CompanyLive.Index do
 
   @impl true
   def mount(_params, _session, socket) do
-    {:ok, stream(socket, :companies, Accounts.list_companies())}
+    companies = Accounts.list_companies()
+    {:ok, stream(socket, :companies, companies)}
   end
 
   @impl true

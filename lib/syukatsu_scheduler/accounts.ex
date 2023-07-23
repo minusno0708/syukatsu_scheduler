@@ -446,4 +446,9 @@ defmodule SyukatsuScheduler.Accounts do
   def change_company(%Company{} = company, attrs \\ %{}) do
     Company.changeset(company, attrs)
   end
+
+  def get_companies_by_user_id(user_id) do
+    from(c in Company, where: c.user_id == ^user_id)
+    |> Repo.all()
+  end
 end
