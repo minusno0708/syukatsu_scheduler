@@ -5,7 +5,10 @@ defmodule SyukatsuSchedulerWeb.CompanyLive.Index do
   alias SyukatsuScheduler.Accounts.Company
 
   @impl true
-  def mount(_params, _session, socket) do
+  def mount(_params, %{"user_token" => user_token}, socket) do
+
+    IO.inspect(user_token)
+
     companies = Accounts.list_companies()
     {:ok, stream(socket, :companies, companies)}
   end
