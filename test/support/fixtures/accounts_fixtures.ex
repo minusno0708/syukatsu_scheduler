@@ -28,4 +28,19 @@ defmodule SyukatsuScheduler.AccountsFixtures do
     [_, token | _] = String.split(captured_email.text_body, "[TOKEN]")
     token
   end
+
+  @doc """
+  Generate a company.
+  """
+  def company_fixture(attrs \\ %{}) do
+    {:ok, company} =
+      attrs
+      |> Enum.into(%{
+        name: "some name",
+        url: "some url"
+      })
+      |> SyukatsuScheduler.Accounts.create_company()
+
+    company
+  end
 end

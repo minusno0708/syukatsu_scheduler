@@ -21,6 +21,14 @@ defmodule SyukatsuSchedulerWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :home
+
+    live "/companies", CompanyLive.Index, :index
+    live "/companies/new", CompanyLive.Index, :new
+    live "/companies/:id/edit", CompanyLive.Index, :edit
+
+    live "/companies/:id", CompanyLive.Show, :show
+    live "/companies/:id/show/edit", CompanyLive.Show, :edit
+
   end
 
   # Other scopes may use custom stacks.
