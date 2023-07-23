@@ -5,6 +5,7 @@ defmodule SyukatsuScheduler.Accounts.Company do
   schema "companies" do
     field :name, :string
     field :status, :string
+    field :schedule, :date
     field :url, :string
 
     belongs_to :user, SyukatsuScheduler.Accounts.User
@@ -15,7 +16,7 @@ defmodule SyukatsuScheduler.Accounts.Company do
   @doc false
   def changeset(company, attrs) do
     company
-    |> cast(attrs, [:name, :status, :url])
+    |> cast(attrs, [:name, :status, :schedule, :url])
     |> validate_required([:name])
   end
 end
