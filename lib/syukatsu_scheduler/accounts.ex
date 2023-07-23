@@ -447,12 +447,18 @@ defmodule SyukatsuScheduler.Accounts do
     Company.changeset(company, attrs)
   end
 
-
-  def get_user_id_by_user_token(user_token) do
-    {:ok, query} = UserToken.get_user_id_from_token_query(user_token)
-
-    user_id = Repo.one(query)
-    |>IO.inspect()
+  def get_companies_by_user_token(user_token) do
+    case UserToken.get_user_id_from_token_query(user_token) do
+      {:ok, query} ->
+        case Repo.one(query) do
+          nil ->
+            {:error, :user_not_found}
+          user_id ->
+            get_companies_by_user_id(user_id)
+        end
+      {:error, reason} ->
+        {:error, reason}
+    end
   end
 
   @spec get_companies_by_user_id(any) :: any
