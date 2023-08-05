@@ -5,7 +5,7 @@ services:
       context: ./db
       dockerfile: Dockerfile
     ports:
-      - 5430:5432
+      - 5432:5432
     environment:
-      POSTGRES_USER: root
-      POSTGRES_PASSWORD: root
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
