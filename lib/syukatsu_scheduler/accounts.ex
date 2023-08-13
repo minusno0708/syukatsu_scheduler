@@ -449,7 +449,6 @@ defmodule SyukatsuScheduler.Accounts do
 
   @spec get_companies_by_user_token(any) :: any
   def get_companies_by_user_token(user_token) do
-    IO.inspect(get_companies_by_user_id(1))
     case UserToken.get_user_id_from_token_query(user_token) do
       {:ok, query} ->
         case Repo.one(query) do
