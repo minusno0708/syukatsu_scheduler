@@ -8,7 +8,7 @@ defmodule SyukatsuSchedulerWeb.CompanyLive.Index do
   def mount(_params, %{"user_token" => user_token}, socket) do
     case Accounts.get_companies_by_user_token(user_token) do
       {:ok, companies} ->
-        {:ok, stream(socket, :companies, companies)}
+        {:ok, stream(socket |> assign(:user_token, user_token), :companies, companies)}
       {:error, _reason} ->
         {:ok, assign(socket, :error, "Unable to retrieve companies")}
     end
