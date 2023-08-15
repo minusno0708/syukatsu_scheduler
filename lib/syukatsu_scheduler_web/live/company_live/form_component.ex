@@ -52,7 +52,9 @@ defmodule SyukatsuSchedulerWeb.CompanyLive.FormComponent do
   end
 
   def handle_event("save", %{"company" => company_params}, socket) do
-    user_id = 1 #current usedrからid取得する
+    IO.puts("---------------------")
+    IO.inspect(socket)
+    user_id = 2
     company_params = Map.put(company_params, "user_id", user_id)
     save_company(socket, socket.assigns.action, company_params)
   end
