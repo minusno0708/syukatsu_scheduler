@@ -176,4 +176,18 @@ defmodule SyukatsuScheduler.Accounts.UserToken do
   def user_and_contexts_query(user, [_ | _] = contexts) do
     from t in UserToken, where: t.user_id == ^user.id and t.context in ^contexts
   end
+
+  @doc """
+  Gets user id from the given sesssion token.
+  """
+  def get_query_from_token(token) do
+    query =
+      from token in token_and_context_query(token, "session"),
+        join: user in assoc(token, :user),
+        where: token.inserted_at > ago(@session_validity_in_days, "day"),
+        select: user.id
+
+    {:ok, query}
+  end
+
 end

@@ -5,8 +5,19 @@ defmodule SyukatsuSchedulerWeb.CompanyLive.Index do
   alias SyukatsuScheduler.Accounts.Company
 
   @impl true
+  def mount(_params, %{"user_token" => user_token}, socket) do
+    {:ok, user_id} = Accounts.get_userid_from_usertoken(user_token)
+
+    case Accounts.get_companies_by_user_id(user_id) do
+      {:ok, companies} ->
+        {:ok, stream(socket |> assign(:user_id, user_id), :companies, companies)}
+      {:error, _reason} ->
+        {:ok, assign(socket, :error, "Unable to retrieve companies")}
+    end
+  end
+
   def mount(_params, _session, socket) do
-    {:ok, stream(socket, :companies, Accounts.list_companies())}
+    {:ok, stream(socket, :companies, [])}
   end
 
   @impl true
@@ -38,6 +49,7 @@ defmodule SyukatsuSchedulerWeb.CompanyLive.Index do
   end
 
   @impl true
+  @spec handle_event(<<_::48>>, map, Phoenix.LiveView.Socket.t()) :: {:noreply, map}
   def handle_event("delete", %{"id" => id}, socket) do
     company = Accounts.get_company!(id)
     {:ok, _} = Accounts.delete_company(company)

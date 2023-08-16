@@ -16,7 +16,7 @@ defmodule SyukatsuScheduler.Accounts.Company do
   @doc false
   def changeset(company, attrs) do
     company
-    |> cast(attrs, [:name, :status, :schedule, :url])
+    |> cast(attrs, [:name, :status, :schedule, :url, :user_id])
     |> validate_required([:name])
   end
 end
