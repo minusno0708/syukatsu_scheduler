@@ -6,7 +6,6 @@ defmodule SyukatsuSchedulerWeb.CompanyLive.Index do
 
   @impl true
   def mount(_params, %{"user_token" => user_token}, socket) do
-
     {:ok, user_id} = Accounts.get_userid_from_usertoken(user_token)
 
     case Accounts.get_companies_by_user_id(user_id) do

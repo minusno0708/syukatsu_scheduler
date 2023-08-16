@@ -453,7 +453,6 @@ defmodule SyukatsuScheduler.Accounts do
   def get_userid_from_usertoken(user_token) do
     case UserToken.get_query_from_token(user_token) do
       {:ok, query} ->
-        IO.inspect(query)
         case Repo.one(query) do
           nil ->
             {:error, :user_not_found}
