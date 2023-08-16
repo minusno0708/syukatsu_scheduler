@@ -73,6 +73,8 @@ defmodule SyukatsuSchedulerWeb.CompanyLive.FormComponent do
   end
 
   defp save_company(socket, :new, company_params) do
+    IO.puts("33333333333333333333333")
+    IO.inspect(socket)
     case Accounts.create_company(company_params) do
       {:ok, company} ->
         notify_parent({:saved, company})
