@@ -52,7 +52,8 @@ defmodule SyukatsuSchedulerWeb.CompanyLive.FormComponent do
   end
 
   def handle_event("save", %{"company" => company_params}, socket) do
-    user_id = 1
+    IO.puts(33333333333333333)
+    user_id = socket.assigns.user_id
     company_params = Map.put(company_params, "user_id", user_id)
     save_company(socket, socket.assigns.action, company_params)
   end
@@ -73,8 +74,6 @@ defmodule SyukatsuSchedulerWeb.CompanyLive.FormComponent do
   end
 
   defp save_company(socket, :new, company_params) do
-    IO.puts("33333333333333333333333")
-    IO.inspect(socket)
     case Accounts.create_company(company_params) do
       {:ok, company} ->
         notify_parent({:saved, company})
