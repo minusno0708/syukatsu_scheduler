@@ -180,7 +180,7 @@ defmodule SyukatsuScheduler.Accounts.UserToken do
   @doc """
   Gets user id from the given sesssion token.
   """
-  def get_user_id_from_token_query(token) do
+  def get_query_from_token(token) do
     query =
       from token in token_and_context_query(token, "session"),
         join: user in assoc(token, :user),

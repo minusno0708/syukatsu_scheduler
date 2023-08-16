@@ -451,7 +451,7 @@ defmodule SyukatsuScheduler.Accounts do
   ログインしているUserが作成したレコードのみ返す
   """
   def get_userid_from_usertoken(user_token) do
-    case UserToken.get_user_id_from_token_query(user_token) do
+    case UserToken.get_query_from_token(user_token) do
       {:ok, query} ->
         IO.inspect(query)
         case Repo.one(query) do
@@ -465,25 +465,15 @@ defmodule SyukatsuScheduler.Accounts do
     end
   end
 
-  @spec get_companies_by_user_token(any) :: any
-  def get_companies_by_user_token(user_token) do
-    case UserToken.get_user_id_from_token_query(user_token) do
-      {:ok, query} ->
-        IO.inspect(query)
-        case Repo.one(query) do
-          nil ->
-            {:error, :user_not_found}
-          user_id ->
-            {:ok, get_companies_by_user_id(user_id)}
-        end
-      {:error, reason} ->
-        {:error, reason}
-    end
-  end
-
   @spec get_companies_by_user_id(any) :: any
   def get_companies_by_user_id(user_id) do
-    from(c in Company, where: c.user_id == ^user_id)
-    |> Repo.all()
+    companies =
+      from(c in Company, where: c.user_id == ^user_id)
+      |> Repo.all()
+    if companies do
+      {:ok, companies}
+    else
+      {:errro, "companies not found"}
+    end
   end
 end

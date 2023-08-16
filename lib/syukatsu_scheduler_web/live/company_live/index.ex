@@ -9,7 +9,7 @@ defmodule SyukatsuSchedulerWeb.CompanyLive.Index do
 
     {:ok, user_id} = Accounts.get_userid_from_usertoken(user_token)
 
-    case Accounts.get_companies_by_user_token(user_token) do
+    case Accounts.get_companies_by_user_id(user_id) do
       {:ok, companies} ->
         {:ok, stream(socket |> assign(:user_id, user_id), :companies, companies)}
       {:error, _reason} ->
