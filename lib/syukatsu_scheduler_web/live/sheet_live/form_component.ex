@@ -22,9 +22,10 @@ defmodule SyukatsuSchedulerWeb.SheetLive.FormComponent do
         phx-submit="save"
       >
         <.input field={@form[:item]} type="text" label="Item" />
-        <textarea id="content-textarea" name="sheet[content]" phx-hook="EnableEnter" rows="5" cols="50">
-          <%= input_value(@form, :content) %>
-        </textarea>
+        <div>
+          <label for="content-input">Content</label>
+          <textarea id="content-textarea" name="sheet[content]" phx-hook="EnableEnter" rows="5" cols="50"><%= input_value(@form, :content) %></textarea>
+        </div>
 
         <:actions>
           <.button phx-disable-with="Saving...">Save Sheet</.button>
