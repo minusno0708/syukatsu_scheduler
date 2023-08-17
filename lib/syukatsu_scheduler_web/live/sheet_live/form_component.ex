@@ -20,7 +20,10 @@ defmodule SyukatsuSchedulerWeb.SheetLive.FormComponent do
         phx-submit="save"
       >
         <.input field={@form[:item]} type="text" label="Item" />
-        <.input field={@form[:content]} type="text" label="Content" />
+        <div>
+          <label for="content">Content</label>
+          <textarea id="content-textarea" name="content" phx-hook="EnableEnter" rows="5" cols="50"><%= @form.data.content %></textarea>
+        </div>
         <:actions>
           <.button phx-disable-with="Saving...">Save Sheet</.button>
         </:actions>
