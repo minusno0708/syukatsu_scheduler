@@ -14,6 +14,6 @@ defmodule SyukatsuScheduler.EntrySheet.Sheet do
   def changeset(sheet, attrs) do
     sheet
     |> cast(attrs, [:item, :content])
-    |> validate_required([:item, :content])
+    |> validate_required([:item])
   end
 end
