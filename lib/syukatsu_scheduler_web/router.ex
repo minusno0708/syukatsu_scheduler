@@ -29,6 +29,13 @@ defmodule SyukatsuSchedulerWeb.Router do
     live "/companies/:id", CompanyLive.Show, :show
     live "/companies/:id/show/edit", CompanyLive.Show, :edit
 
+    live "/sheets", SheetLive.Index, :index
+    live "/sheets/new", SheetLive.Index, :new
+    live "/sheets/:id/edit", SheetLive.Index, :edit
+
+    live "/sheets/:id", SheetLive.Show, :show
+    live "/sheets/:id/show/edit", SheetLive.Show, :edit
+
   end
 
   # Other scopes may use custom stacks.
