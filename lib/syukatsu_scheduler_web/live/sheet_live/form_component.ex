@@ -1,4 +1,6 @@
 defmodule SyukatsuSchedulerWeb.SheetLive.FormComponent do
+  import Phoenix.HTML.Form
+
   use SyukatsuSchedulerWeb, :live_component
 
   alias SyukatsuScheduler.EntrySheet
@@ -20,8 +22,9 @@ defmodule SyukatsuSchedulerWeb.SheetLive.FormComponent do
         phx-submit="save"
       >
         <.input field={@form[:item]} type="text" label="Item" />
-        <.input field={@form[:content]} type="text" label="Content" />
-
+        <textarea id="content-textarea" name="sheet[content]" phx-hook="EnableEnter" rows="5" cols="50">
+          <%= input_value(@form, :content) %>
+        </textarea>
 
         <:actions>
           <.button phx-disable-with="Saving...">Save Sheet</.button>
