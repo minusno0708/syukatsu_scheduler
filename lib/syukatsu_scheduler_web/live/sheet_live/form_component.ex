@@ -23,7 +23,7 @@ defmodule SyukatsuSchedulerWeb.SheetLive.FormComponent do
       >
         <.input field={@form[:item]} type="text" label="Item" />
         <div>
-          <label for="content-input">Content</label>
+          <label for="content-input" style="display: block;">Content</label>
           <textarea id="content-textarea" name="sheet[content]" phx-hook="EnableEnter" rows="5" cols="50"><%= input_value(@form, :content) %></textarea>
         </div>
 
