@@ -1,0 +1,42 @@
+<.header>
+  Listing Sheets
+  <:actions>
+    <.link patch={~p"/sheets/new"}>
+      <.button>New Sheet</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.table
+  id="sheets"
+  rows={@streams.sheets}
+  row_click={fn {_id, sheet} -> JS.navigate(~p"/sheets/#{sheet}") end}
+>
+  <:col :let={{_id, sheet}} label="Item"><%= sheet.item %></:col>
+  <:col :let={{_id, sheet}} label="Content"><%= sheet.content %></:col>
+  <:action :let={{_id, sheet}}>
+    <div class="sr-only">
+      <.link navigate={~p"/sheets/#{sheet}"}>Show</.link>
+    </div>
+    <.link patch={~p"/sheets/#{sheet}/edit"}>Edit</.link>
+  </:action>
+  <:action :let={{id, sheet}}>
+    <.link
+      phx-click={JS.push("delete", value: %{id: sheet.id}) |> hide("##{id}")}
+      data-confirm="Are you sure?"
+    >
+      Delete
+    </.link>
+  </:action>
+</.table>
+
+<.modal :if={@live_action in [:new, :edit]} id="sheet-modal" show on_cancel={JS.patch(~p"/sheets")}>
+  <.live_component
+    module={SyukatsuSchedulerWeb.SheetLive.FormComponent}
+    id={@sheet.id || :new}
+    title={@page_title}
+    action={@live_action}
+    sheet={@sheet}
+    patch={~p"/sheets"}
+  />
+</.modal>
