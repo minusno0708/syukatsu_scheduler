@@ -31,6 +31,8 @@
   </:action>
 </.table>
 
+<.back navigate={~p"/companies/#{@company_id}"}>Back to Conpany</.back>
+
 <.modal :if={@live_action in [:new, :edit]} id="sheet-modal" show on_cancel={JS.patch(~p"/#{@company_id}/sheets")}>
   <.live_component
     module={SyukatsuSchedulerWeb.SheetLive.FormComponent}
