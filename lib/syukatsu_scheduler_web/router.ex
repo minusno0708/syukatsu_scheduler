@@ -29,8 +29,8 @@ defmodule SyukatsuSchedulerWeb.Router do
     live "/companies/:id", CompanyLive.Show, :show
     live "/companies/:id/show/edit", CompanyLive.Show, :edit
 
-    live ":company_id/sheets", SheetLive.Index, :index
-    live ":company_id/sheets/new", SheetLive.Index, :new
+    live "/:company_id/sheets", SheetLive.Index, :index
+    live "/:company_id/sheets/new", SheetLive.Index, :new
     live "/sheets/:id/edit", SheetLive.Index, :edit
 
     live "/sheets/:id", SheetLive.Show, :show
