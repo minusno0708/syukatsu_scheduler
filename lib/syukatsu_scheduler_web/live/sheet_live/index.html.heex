@@ -1,4 +1,5 @@
 <.header>
+  ss
   Listing Sheets
   <:actions>
     <.link patch={~p"/1/sheets/new"}>
@@ -31,7 +32,7 @@
   </:action>
 </.table>
 
-<.modal :if={@live_action in [:new, :edit]} id="sheet-modal" show on_cancel={JS.patch(~p"/sheets")}>
+<.modal :if={@live_action in [:new, :edit]} id="sheet-modal" show on_cancel={JS.patch(~p"/1/sheets")}>
   <.live_component
     module={SyukatsuSchedulerWeb.SheetLive.FormComponent}
     id={@sheet.id || :new}
