@@ -13,7 +13,7 @@
   <:item title="Content"><%= @sheet.content %></:item>
 </.list>
 
-<.back navigate={~p"/1/sheets"}>Back to sheets</.back>
+<.back navigate={~p"/#{@sheet.company_id}/sheets"}>Back to sheets</.back>
 
 <.modal :if={@live_action == :edit} id="sheet-modal" show on_cancel={JS.patch(~p"/sheets/#{@sheet}")}>
   <.live_component
