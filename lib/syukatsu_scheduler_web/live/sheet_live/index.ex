@@ -6,6 +6,7 @@ defmodule SyukatsuSchedulerWeb.SheetLive.Index do
 
   @impl true
   def mount(_params, _session, socket) do
+    IO.inspect("mount")
     {:ok, stream(socket, :sheets, EntrySheet.list_sheets())}
   end
 

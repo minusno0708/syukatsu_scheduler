@@ -18,6 +18,7 @@
 <.modal :if={@live_action == :edit} id="sheet-modal" show on_cancel={JS.patch(~p"/sheets/#{@sheet}")}>
   <.live_component
     module={SyukatsuSchedulerWeb.SheetLive.FormComponent}
+    company_id = {@sheet.company_id}
     id={@sheet.id}
     title={@page_title}
     action={@live_action}
