@@ -62,7 +62,8 @@ defmodule SyukatsuSchedulerWeb.SheetLive.FormComponent do
   def handle_event("save", %{"sheet" => sheet_params}, socket) do
     IO.puts("^^^^handle_event_save^^^^")
     IO.inspect(sheet_params)
-    save_sheet(socket, socket.assigns.action, sheet_params)
+    company_id = socket.assigns.company_id
+    save_sheet(socket, socket.assigns.action, sheet_params |> Map.put("company_id", company_id))
   end
 
   defp save_sheet(socket, :edit, sheet_params) do
