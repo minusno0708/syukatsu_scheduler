@@ -50,4 +50,12 @@ defmodule SyukatsuSchedulerWeb.SheetLive.Index do
 
     {:noreply, stream_delete(socket, :sheets, sheet)}
   end
+
+  defp text_slice(nil, _length), do: nil
+  defp text_slice(text, length) do
+    case String.length(text) > length do
+      true -> String.slice(text, 0, length-3) <> "..."
+      _ -> text
+    end
+  end
 end

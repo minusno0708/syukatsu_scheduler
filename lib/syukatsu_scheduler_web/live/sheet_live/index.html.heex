@@ -12,9 +12,8 @@
   rows={@streams.sheets}
   row_click={fn {_id, sheet} -> JS.navigate(~p"/sheets/#{sheet}") end}
 >
-  <:col :let={{_id, sheet}} label="Item"><%= sheet.item %></:col>
-  <:col :let={{_id, sheet}} label="Content"><%= sheet.content %></:col>
-  <:col :let={{_id, sheet}} label="Company"><%= sheet.company_id %></:col>
+  <:col :let={{_id, sheet}} label="Item"><%= text_slice(sheet.item, 15) %></:col>
+  <:col :let={{_id, sheet}} label="Content"><%= text_slice(sheet.content, 30) %></:col>
   <:action :let={{_id, sheet}}>
     <div class="sr-only">
       <.link navigate={~p"/sheets/#{sheet}"}>Show</.link>
