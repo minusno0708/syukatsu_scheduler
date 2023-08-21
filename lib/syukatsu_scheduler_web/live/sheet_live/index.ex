@@ -21,7 +21,6 @@ defmodule SyukatsuSchedulerWeb.SheetLive.Index do
   end
 
   defp apply_action(socket, :edit, %{"id" => id}) do
-    IO.puts("edit_action")
     socket
     |> assign(:page_title, "Edit Sheet")
     |> assign(:sheet, EntrySheet.get_sheet!(id))
