@@ -19,7 +19,7 @@
     <div class="sr-only">
       <.link navigate={~p"/sheets/#{sheet}"}>Show</.link>
     </div>
-    <.link patch={~p"/sheets/#{sheet}/edit"}>Edit</.link>
+    <.link patch={~p"/#{@company_id}/sheets/#{sheet}/edit"}>Edit</.link>
   </:action>
   <:action :let={{id, sheet}}>
     <.link
