@@ -6,7 +6,7 @@ defmodule SyukatsuScheduler.EntrySheet.Sheet do
     field :item, :string
     field :content, :string
 
-    belongs_to :company, SyukatsuScheduler.Accounts.Conpany
+    belongs_to :company, SyukatsuScheduler.Accounts.Company
 
     timestamps()
   end
