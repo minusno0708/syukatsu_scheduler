@@ -5,7 +5,8 @@ defmodule SyukatsuScheduler.EntrySheet.Sheet do
   schema "sheets" do
     field :item, :string
     field :content, :string
-    field :company_id, :id
+
+    belongs_to :company, SyukatsuScheduler.Accounts.Company
 
     timestamps()
   end
@@ -13,7 +14,7 @@ defmodule SyukatsuScheduler.EntrySheet.Sheet do
   @doc false
   def changeset(sheet, attrs) do
     sheet
-    |> cast(attrs, [:item, :content])
+    |> cast(attrs, [:item, :content, :company_id])
     |> validate_required([:item])
   end
 end

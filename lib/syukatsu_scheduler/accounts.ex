@@ -472,7 +472,7 @@ defmodule SyukatsuScheduler.Accounts do
     if companies do
       {:ok, companies}
     else
-      {:errro, "companies not found"}
+      {:error, "companies not found"}
     end
   end
 end

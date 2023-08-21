@@ -21,6 +21,17 @@ defmodule SyukatsuScheduler.EntrySheet do
     Repo.all(Sheet)
   end
 
+  def get_sheets_by_company(id) when is_binary(id) do
+    sheets =
+      from(s in Sheet, where: s.company_id == ^id)
+      |> Repo.all()
+    if sheets do
+      {:ok, sheets}
+    else
+      {:error, "sheets not found"}
+    end
+  end
+
   @doc """
   Gets a single sheet.
 

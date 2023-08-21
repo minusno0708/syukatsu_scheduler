@@ -13,6 +13,8 @@
   <:item title="Url"><%= @company.url %></:item>
 </.list>
 
+<.back navigate={~p"/#{@company}/sheets"}>ES</.back>
+
 <.back navigate={~p"/companies"}>Back to companies</.back>
 
 <.modal :if={@live_action == :edit} id="company-modal" show on_cancel={JS.patch(~p"/companies/#{@company}")}>

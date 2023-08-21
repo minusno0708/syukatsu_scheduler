@@ -37,8 +37,6 @@ defmodule SyukatsuSchedulerWeb.SheetLive.FormComponent do
 
   @impl true
   def update(%{sheet: sheet} = assigns, socket) do
-    IO.puts("^^^^update^^^^")
-    IO.inspect(assigns)
     changeset = EntrySheet.change_sheet(sheet)
 
     {:ok,
@@ -49,8 +47,6 @@ defmodule SyukatsuSchedulerWeb.SheetLive.FormComponent do
 
   @impl true
   def handle_event("validate", %{"sheet" => sheet_params}, socket) do
-    IO.puts("^^^^handle_event_validate^^^^")
-    IO.inspect(sheet_params)
     changeset =
       socket.assigns.sheet
       |> EntrySheet.change_sheet(sheet_params)
@@ -60,9 +56,8 @@ defmodule SyukatsuSchedulerWeb.SheetLive.FormComponent do
   end
 
   def handle_event("save", %{"sheet" => sheet_params}, socket) do
-    IO.puts("^^^^handle_event_save^^^^")
-    IO.inspect(sheet_params)
-    save_sheet(socket, socket.assigns.action, sheet_params)
+    company_id = socket.assigns.company_id
+    save_sheet(socket, socket.assigns.action, sheet_params |> Map.put("company_id", company_id))
   end
 
   defp save_sheet(socket, :edit, sheet_params) do
@@ -81,8 +76,6 @@ defmodule SyukatsuSchedulerWeb.SheetLive.FormComponent do
   end
 
   defp save_sheet(socket, :new, sheet_params) do
-    IO.puts("^^^^save_sheet^^^^")
-    IO.inspect(sheet_params)
     case EntrySheet.create_sheet(sheet_params) do
       {:ok, sheet} ->
         notify_parent({:saved, sheet})
@@ -98,8 +91,6 @@ defmodule SyukatsuSchedulerWeb.SheetLive.FormComponent do
   end
 
   defp assign_form(socket, %Ecto.Changeset{} = changeset) do
-    IO.puts("^^^^assign_form^^^^")
-    IO.inspect(changeset)
     assign(socket, :form, to_form(changeset))
   end
 

@@ -1,7 +1,7 @@
 <.header>
-  Listing Sheets
+  Listing Sheets <%= @company_id %>
   <:actions>
-    <.link patch={~p"/sheets/new"}>
+    <.link patch={~p"/#{@company_id}/sheets/new"}>
       <.button>New Sheet</.button>
     </.link>
   </:actions>
@@ -19,7 +19,7 @@
     <div class="sr-only">
       <.link navigate={~p"/sheets/#{sheet}"}>Show</.link>
     </div>
-    <.link patch={~p"/sheets/#{sheet}/edit"}>Edit</.link>
+    <.link patch={~p"/#{@company_id}/sheets/#{sheet}/edit"}>Edit</.link>
   </:action>
   <:action :let={{id, sheet}}>
     <.link
@@ -31,13 +31,16 @@
   </:action>
 </.table>
 
-<.modal :if={@live_action in [:new, :edit]} id="sheet-modal" show on_cancel={JS.patch(~p"/sheets")}>
+<.back navigate={~p"/companies/#{@company_id}"}>Back to conpany</.back>
+
+<.modal :if={@live_action in [:new, :edit]} id="sheet-modal" show on_cancel={JS.patch(~p"/#{@company_id}/sheets")}>
   <.live_component
     module={SyukatsuSchedulerWeb.SheetLive.FormComponent}
+    company_id = {@company_id}
     id={@sheet.id || :new}
     title={@page_title}
     action={@live_action}
     sheet={@sheet}
-    patch={~p"/sheets"}
+    patch={~p"/#{@company_id}/sheets"}
   />
 </.modal>
