@@ -9,7 +9,7 @@ defmodule SyukatsuSchedulerWeb.SheetLive.Index do
     company_id = params["company_id"]
     case EntrySheet.get_sheets_by_company(company_id) do
       {:ok, sheets} ->
-        {:ok, stream(socket, :sheets, sheets)}
+        {:ok, stream(socket |> assign(:company_id, params["company_id"]), :sheets, sheets)}
       {:error, reason} ->
         {:ok, assign(:error, reason)}
     end
@@ -17,7 +17,7 @@ defmodule SyukatsuSchedulerWeb.SheetLive.Index do
 
   @impl true
   def handle_params(params, _url, socket) do
-    {:noreply, apply_action(socket |> assign(:company_id, params["company_id"]), socket.assigns.live_action, params)}
+    {:noreply, apply_action(socket, socket.assigns.live_action, params)}
   end
 
   defp apply_action(socket, :edit, %{"id" => id}) do
