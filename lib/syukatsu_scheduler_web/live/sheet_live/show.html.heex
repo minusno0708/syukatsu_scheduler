@@ -10,7 +10,7 @@
 
 <.list>
   <:item title="Item"><%= @sheet.item %></:item>
-  <:item title="Content"><%= text_indention(@sheet.content) %></:item>
+  <:item title="Content"><%= raw text_indention(@sheet.content) %></:item>
 </.list>
 
 <.back navigate={~p"/#{@sheet.company_id}/sheets"}>Back to sheets</.back>

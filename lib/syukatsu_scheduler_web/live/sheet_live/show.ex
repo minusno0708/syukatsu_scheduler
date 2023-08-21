@@ -20,5 +20,5 @@ defmodule SyukatsuSchedulerWeb.SheetLive.Show do
   defp page_title(:edit), do: "Edit Sheet"
 
   defp text_indention(nil), do: nil
-  defp text_indention(text), do: String.replace(text,  "\n", "<br />")
+  defp text_indention(text), do: String.replace(text,  "\n", "<br/>")
 end
