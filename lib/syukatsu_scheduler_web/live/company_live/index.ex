@@ -17,7 +17,7 @@ defmodule SyukatsuSchedulerWeb.CompanyLive.Index do
   end
 
   def mount(_params, _session, socket) do
-    {:ok, stream(socket, :companies, [])}
+    {:ok, stream(socket |> assign(:user_id, nil), :companies, [])}
   end
 
   @impl true
