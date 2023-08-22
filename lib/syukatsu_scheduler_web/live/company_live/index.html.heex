@@ -1,9 +1,15 @@
 <.header>
   Listing Companies
   <:actions>
-    <.link patch={~p"/companies/new"}>
-      <.button>New Company</.button>
-    </.link>
+    <%= if @user_id do %>
+      <.link patch={~p"/companies/new"}>
+        <.button>New Company</.button>
+      </.link>
+    <% else %>
+      <.link patch={~p"/users/register"}>
+        <.button>New Company</.button>
+      </.link>
+    <% end %>
   </:actions>
 </.header>
 
