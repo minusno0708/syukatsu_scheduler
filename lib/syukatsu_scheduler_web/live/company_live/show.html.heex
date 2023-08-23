@@ -1,23 +1,21 @@
 <.header>
-  Company <%= @company.id %>
-  <:subtitle>This is a company record from your database.</:subtitle>
+  <%= @company.name %>
   <:actions>
     <.link patch={~p"/companies/#{@company}/show/edit"} phx-click={JS.push_focus()}>
-      <.button>Edit company</.button>
+      <.button>編集</.button>
     </.link>
   </:actions>
 </.header>
 
 <.list>
-  <:item title="Name"><%= @company.name %></:item>
-  <:item title="Status"><%= @company.status %></:item>
-  <:item title="Schedule"><%= @company.schedule %></:item>
-  <:item title="Url"><%= @company.url %></:item>
+  <:item title="現在の状況"><%= @company.status %></:item>
+  <:item title="予定"><%= @company.schedule %></:item>
+  <:item title="URL"><%= @company.url %></:item>
 </.list>
 
-<.back navigate={~p"/#{@company}/sheets"}>ES</.back>
+<.back navigate={~p"/#{@company}/sheets"}>ES執筆</.back>
 
-<.back navigate={~p"/companies"}>Back to companies</.back>
+<.back navigate={~p"/companies"}>応募企業リスト</.back>
 
 <.modal :if={@live_action == :edit} id="company-modal" show on_cancel={JS.patch(~p"/companies/#{@company}")}>
   <.live_component
