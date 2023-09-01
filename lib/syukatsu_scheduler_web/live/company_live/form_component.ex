@@ -19,10 +19,10 @@ defmodule SyukatsuSchedulerWeb.CompanyLive.FormComponent do
         phx-change="validate"
         phx-submit="save"
       >
-        <.input field={@form[:name]} type="text" label="Name" />
-        <.input field={@form[:status]} type="text" label="Status" />
-        <.input field={@form[:schedule]} type="date" label="Schedule" />
-        <.input field={@form[:url]} type="text" label="URL" />
+        <.input field={@form[:name]} type="text" label="企業名" />
+        <.input field={@form[:status]} type="text" label="現在の状態" />
+        <.input field={@form[:schedule]} type="date" label="予定" />
+        <.input field={@form[:url]} type="text" label="応募URL" />
         <:actions>
           <.button phx-disable-with="Saving...">Save Company</.button>
         </:actions>
