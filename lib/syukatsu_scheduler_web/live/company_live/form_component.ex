@@ -9,7 +9,7 @@ defmodule SyukatsuSchedulerWeb.CompanyLive.FormComponent do
     <div>
       <.header>
         <%= @title %>
-        <:subtitle>Use this form to manage company records in your database.</:subtitle>
+        <:subtitle>応募情報を記述してください</:subtitle>
       </.header>
 
       <.simple_form
@@ -19,10 +19,10 @@ defmodule SyukatsuSchedulerWeb.CompanyLive.FormComponent do
         phx-change="validate"
         phx-submit="save"
       >
-        <.input field={@form[:name]} type="text" label="Name" />
-        <.input field={@form[:status]} type="text" label="Status" />
-        <.input field={@form[:schedule]} type="date" label="Schedule" />
-        <.input field={@form[:url]} type="text" label="URL" />
+        <.input field={@form[:name]} type="text" label="企業名" />
+        <.input field={@form[:status]} type="text" label="現在の状態" />
+        <.input field={@form[:schedule]} type="date" label="予定" />
+        <.input field={@form[:url]} type="text" label="応募URL" />
         <:actions>
           <.button phx-disable-with="Saving...">Save Company</.button>
         </:actions>
@@ -52,8 +52,12 @@ defmodule SyukatsuSchedulerWeb.CompanyLive.FormComponent do
   end
 
   def handle_event("save", %{"company" => company_params}, socket) do
-    user_id = socket.assigns.user_id
-    save_company(socket, socket.assigns.action, company_params |> Map.put("user_id", user_id))
+    case socket.assigns do
+      %{user_id: user_id} ->
+        save_company(socket, socket.assigns.action, company_params |> Map.put("user_id", user_id))
+      _ ->
+        save_company(socket, socket.assigns.action, company_params)
+    end
   end
 
   defp save_company(socket, :edit, company_params) do

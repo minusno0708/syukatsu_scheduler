@@ -27,19 +27,19 @@ defmodule SyukatsuSchedulerWeb.CompanyLive.Index do
 
   defp apply_action(socket, :edit, %{"id" => id}) do
     socket
-    |> assign(:page_title, "Edit Company")
+    |> assign(:page_title, "応募情報更新")
     |> assign(:company, Accounts.get_company!(id))
   end
 
   defp apply_action(socket, :new, _params) do
     socket
-    |> assign(:page_title, "New Company")
+    |> assign(:page_title, "応募情報作成")
     |> assign(:company, %Company{})
   end
 
   defp apply_action(socket, :index, _params) do
     socket
-    |> assign(:page_title, "Listing Companies")
+    |> assign(:page_title, "応募企業一覧")
     |> assign(:company, nil)
   end
 

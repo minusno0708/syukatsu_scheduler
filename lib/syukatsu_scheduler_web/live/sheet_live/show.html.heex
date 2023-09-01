@@ -1,19 +1,17 @@
 <.header>
-  Sheet <%= @sheet.id %>
-  <:subtitle>This is a sheet record from your database.</:subtitle>
+  <%= @sheet.item %>
   <:actions>
     <.link patch={~p"/sheets/#{@sheet}/show/edit"} phx-click={JS.push_focus()}>
-      <.button>Edit sheet</.button>
+      <.button>編集</.button>
     </.link>
   </:actions>
 </.header>
 
 <.list>
-  <:item title="Item"><%= @sheet.item %></:item>
-  <:item title="Content"><%= raw text_indention(@sheet.content) %></:item>
+  <:item title="内容"><%= raw text_indention(@sheet.content) %></:item>
 </.list>
 
-<.back navigate={~p"/#{@sheet.company_id}/sheets"}>Back to sheets</.back>
+<.back navigate={~p"/#{@sheet.company_id}/sheets"}>ES項目一覧に戻る</.back>
 
 <.modal :if={@live_action == :edit} id="sheet-modal" show on_cancel={JS.patch(~p"/sheets/#{@sheet}")}>
   <.live_component
