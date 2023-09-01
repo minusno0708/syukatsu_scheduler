@@ -22,13 +22,13 @@ defmodule SyukatsuSchedulerWeb.SheetLive.Index do
 
   defp apply_action(socket, :edit, %{"id" => id}) do
     socket
-    |> assign(:page_title, "Edit Sheet")
+    |> assign(:page_title, "ES項目更新")
     |> assign(:sheet, EntrySheet.get_sheet!(id))
   end
 
   defp apply_action(socket, :new, _params) do
     socket
-    |> assign(:page_title, "New Sheet")
+    |> assign(:page_title, "ES新規項目作成")
     |> assign(:sheet, %Sheet{})
   end
 

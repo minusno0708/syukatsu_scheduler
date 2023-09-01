@@ -11,7 +11,7 @@ defmodule SyukatsuSchedulerWeb.SheetLive.FormComponent do
     <div>
       <.header>
         <%= @title %>
-        <:subtitle>Use this form to manage sheet records in your database.</:subtitle>
+        <:subtitle>ESの項目と内容を記述する</:subtitle>
       </.header>
 
       <.simple_form
@@ -21,9 +21,9 @@ defmodule SyukatsuSchedulerWeb.SheetLive.FormComponent do
         phx-change="validate"
         phx-submit="save"
       >
-        <.input field={@form[:item]} type="text" label="Item" />
+        <.input field={@form[:item]} type="text" label="項目" />
         <div>
-          <label for="sheet_content" class="block text-sm font-semibold leading-6 text-zinc-800" style="display: block;">Content</label>
+          <label for="sheet_content" class="block text-sm font-semibold leading-6 text-zinc-800" style="display: block;">内容</label>
           <textarea id="content-textarea" name="sheet[content]" phx-hook="EnableEnter"  rows="8" class="mt-2 block w-full rounded-lg text-zinc-900 focus:ring-0 sm:text-sm sm:leading-6 phx-no-feedback:border-zinc-300 phx-no-feedback:focus:border-zinc-400 border-zinc-300 focus:border-zinc-400"><%= input_value(@form, :content) %></textarea>
         </div>
 
