@@ -1,5 +1,5 @@
 <.header>
-  応募企業
+  <%= @page_title %>
   <:actions>
     <%= if @user_id do %>
       <.link patch={~p"/companies/new"}>

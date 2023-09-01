@@ -39,7 +39,7 @@ defmodule SyukatsuSchedulerWeb.CompanyLive.Index do
 
   defp apply_action(socket, :index, _params) do
     socket
-    |> assign(:page_title, "Listing Companies")
+    |> assign(:page_title, "応募企業一覧")
     |> assign(:company, nil)
   end
 
