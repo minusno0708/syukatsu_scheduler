@@ -34,7 +34,7 @@ defmodule SyukatsuSchedulerWeb.SheetLive.Index do
 
   defp apply_action(socket, :index, _params) do
     socket
-    |> assign(:page_title, "Listing Sheets")
+    |> assign(:page_title, "ES項目一覧")
     |> assign(:sheet, nil)
   end
 

@@ -1,5 +1,5 @@
 <.header>
-  Listing Sheets <%= @company_id %>
+  <%= @page_title %> <%= @company_id %>
   <:actions>
     <.link patch={~p"/#{@company_id}/sheets/new"}>
       <.button>新規項目作成</.button>
