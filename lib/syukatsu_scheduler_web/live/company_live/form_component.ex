@@ -9,7 +9,7 @@ defmodule SyukatsuSchedulerWeb.CompanyLive.FormComponent do
     <div>
       <.header>
         <%= @title %>
-        <:subtitle>Use this form to manage company records in your database.</:subtitle>
+        <:subtitle>更新後の応募情報を記述してください</:subtitle>
       </.header>
 
       <.simple_form
