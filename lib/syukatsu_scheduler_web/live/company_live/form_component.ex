@@ -9,7 +9,7 @@ defmodule SyukatsuSchedulerWeb.CompanyLive.FormComponent do
     <div>
       <.header>
         <%= @title %>
-        <:subtitle>作成する応募情報を記述してください</:subtitle>
+        <:subtitle>応募情報を記述してください</:subtitle>
       </.header>
 
       <.simple_form
