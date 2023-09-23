@@ -1,4 +1,4 @@
-<%= if @company.user_id == 2 do %>
+<%= if @current_user_id == @company.user_id do %>
 <.header>
   <%= @company.name %>
   <:actions>
@@ -17,6 +17,11 @@
 <.back navigate={~p"/#{@company}/sheets"}>ES執筆</.back>
 
 <.back navigate={~p"/companies"}>応募企業リスト</.back>
+
+<% else %>
+<.header>
+  アクセス権限がありません
+</.header>
 
 <% end %>
 
