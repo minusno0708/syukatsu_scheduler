@@ -10,14 +10,14 @@ defmodule SyukatsuSchedulerWeb.CompanyLive.Index do
 
     case Accounts.get_companies_by_user_id(user_id) do
       {:ok, companies} ->
-        {:ok, stream(socket |> assign(:user_id, user_id), :companies, companies)}
+        {:ok, stream(socket |> assign(:current_user_id, user_id), :companies, companies)}
       {:error, _reason} ->
         {:ok, assign(socket, :error, "Unable to retrieve companies")}
     end
   end
 
   def mount(_params, _session, socket) do
-    {:ok, stream(socket |> assign(:user_id, nil), :companies, [])}
+    {:ok, stream(socket |> assign(:current_user_id, nil), :companies, [])}
   end
 
   @impl true

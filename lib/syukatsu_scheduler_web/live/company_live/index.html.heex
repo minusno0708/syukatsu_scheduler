@@ -1,7 +1,7 @@
 <.header>
   <%= @page_title %>
   <:actions>
-    <%= if @user_id do %>
+    <%= if @current_user_id do %>
       <.link patch={~p"/companies/new"}>
         <.button>新規企業</.button>
       </.link>
@@ -45,7 +45,7 @@
     title={@page_title}
     action={@live_action}
     company={@company}
-    user_id={@user_id}
+    user_id={@current_user_id}
     patch={~p"/companies"}
   />
 </.modal>
