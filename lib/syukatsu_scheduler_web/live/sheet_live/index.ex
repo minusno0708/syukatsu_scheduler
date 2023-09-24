@@ -1,17 +1,37 @@
 defmodule SyukatsuSchedulerWeb.SheetLive.Index do
   use SyukatsuSchedulerWeb, :live_view
 
+  alias SyukatsuScheduler.Accounts
   alias SyukatsuScheduler.EntrySheet
   alias SyukatsuScheduler.EntrySheet.Sheet
+  alias SyukatsuSchedulerWeb.RenderErrors
 
   @impl true
-  def mount(params, _session, socket) do
-    company_id = params["company_id"]
+  def mount(%{"company_id" => company_id}, %{"user_token" => user_token}, socket) do
+    {:ok, current_user_id} = Accounts.get_userid_from_usertoken(user_token)
+
+    if Accounts.get_company!(company_id).user_id == current_user_id do
+      case EntrySheet.get_sheets_by_company(company_id) do
+        {:ok, sheets} ->
+          {:ok, stream(socket
+            |> assign(:company_id, company_id),
+          :sheets, sheets)}
+        {:error, reason} ->
+          {:ok, socket |> assign(:error, reason)}
+      end
+
+    else
+      {:ok, socket |> assign(:error, RenderErrors.render_error(:forbidden))}
+    end
+
+  end
+
+  def mount(%{"company_id" => company_id}, _session, socket) do
     case EntrySheet.get_sheets_by_company(company_id) do
       {:ok, sheets} ->
-        {:ok, stream(socket |> assign(:company_id, params["company_id"]), :sheets, sheets)}
+        {:ok, stream(socket |> assign(:company_id, company_id), :sheets, sheets)}
       {:error, reason} ->
-        {:ok, assign(:error, reason)}
+        {:ok, socket |> assign(:error, reason)}
     end
   end
 

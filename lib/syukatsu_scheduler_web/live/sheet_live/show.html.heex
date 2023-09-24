@@ -1,3 +1,10 @@
+<%= if assigns[:error] do %>
+
+<.header>
+  <%= @error %>
+</.header>
+
+<% else %>
 <.header>
   <%= @sheet.item %>
   <:actions>
@@ -12,6 +19,8 @@
 </.list>
 
 <.back navigate={~p"/#{@sheet.company_id}/sheets"}>ES項目一覧に戻る</.back>
+
+<% end %>
 
 <.modal :if={@live_action == :edit} id="sheet-modal" show on_cancel={JS.patch(~p"/sheets/#{@sheet}")}>
   <.live_component

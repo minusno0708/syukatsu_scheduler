@@ -1,3 +1,10 @@
+<%= if assigns[:error] do %>
+
+<.header>
+  <%= @error %>
+</.header>
+
+<% else %>
 <.header>
   <%= @page_title %> <%= @company_id %>
   <:actions>
@@ -31,6 +38,8 @@
 </.table>
 
 <.back navigate={~p"/companies/#{@company_id}"}>企業情報に戻る</.back>
+
+<% end %>
 
 <.modal :if={@live_action in [:new, :edit]} id="sheet-modal" show on_cancel={JS.patch(~p"/#{@company_id}/sheets")}>
   <.live_component

@@ -1,3 +1,10 @@
+<%= if assigns[:error] do %>
+
+<.header>
+  <%= @error %>
+</.header>
+
+<% else %>
 <.header>
   <%= @company.name %>
   <:actions>
@@ -16,6 +23,8 @@
 <.back navigate={~p"/#{@company}/sheets"}>ES執筆</.back>
 
 <.back navigate={~p"/companies"}>応募企業リスト</.back>
+
+<% end %>
 
 <.modal :if={@live_action == :edit} id="company-modal" show on_cancel={JS.patch(~p"/companies/#{@company}")}>
   <.live_component
