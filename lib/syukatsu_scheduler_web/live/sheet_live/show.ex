@@ -13,7 +13,7 @@ defmodule SyukatsuSchedulerWeb.SheetLive.Show do
   end
 
   def mount(_params, _session, socket) do
-    {:ok, socket}
+    {:ok, socket |> assign(:current_user_id, nil)}
   end
 
   @impl true
