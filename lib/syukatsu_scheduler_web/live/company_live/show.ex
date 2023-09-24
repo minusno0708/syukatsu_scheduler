@@ -16,10 +16,20 @@ defmodule SyukatsuSchedulerWeb.CompanyLive.Show do
 
   @impl true
   def handle_params(%{"id" => id}, _, socket) do
-    {:noreply,
-     socket
-     |> assign(:page_title, page_title(socket.assigns.live_action))
-     |> assign(:company, Accounts.get_company!(id))}
+    company = Accounts.get_company!(id)
+
+    if socket.assigns.current_user_id == company.user_id do
+      {:noreply,
+        socket
+        |> assign(:page_title, page_title(socket.assigns.live_action))
+        |> assign(:company, company)}
+
+    else
+      {:noreply,
+        socket
+        |> assign(:page_title, page_title(socket.assigns.live_action))
+        |> assign(:error, "不正なユーザーによるアクセスです")}
+    end
   end
 
   defp page_title(:show), do: "Show Company"

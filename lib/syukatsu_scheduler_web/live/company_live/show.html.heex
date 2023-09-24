@@ -1,4 +1,10 @@
-<%= if @current_user_id == @company.user_id do %>
+<%= if assigns[:error] do %>
+
+<.header>
+  <%= @error %>
+</.header>
+
+<% else %>
 <.header>
   <%= @company.name %>
   <:actions>
@@ -17,11 +23,6 @@
 <.back navigate={~p"/#{@company}/sheets"}>ES執筆</.back>
 
 <.back navigate={~p"/companies"}>応募企業リスト</.back>
-
-<% else %>
-<.header>
-  無効なアクセスです
-</.header>
 
 <% end %>
 
