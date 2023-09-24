@@ -1,16 +1,32 @@
 defmodule SyukatsuSchedulerWeb.SheetLive.Index do
   use SyukatsuSchedulerWeb, :live_view
 
+  alias SyukatsuScheduler.Accounts
   alias SyukatsuScheduler.EntrySheet
   alias SyukatsuScheduler.EntrySheet.Sheet
 
   @impl true
+  def mount(%{"company_id" => company_id}, %{"user_token" => user_token}, socket) do
+    {:ok, user_id} = Accounts.get_userid_from_usertoken(user_token)
+
+    IO.puts("user_id #{user_id}")
+
+    case EntrySheet.get_sheets_by_company(company_id) do
+      {:ok, sheets} ->
+        {:ok, stream(socket
+          |> assign(:company_id, company_id),
+        :sheets, sheets)}
+      {:error, reason} ->
+        {:ok, socket |> assign(:error, reason)}
+    end
+  end
+
   def mount(%{"company_id" => company_id}, _session, socket) do
     case EntrySheet.get_sheets_by_company(company_id) do
       {:ok, sheets} ->
         {:ok, stream(socket |> assign(:company_id, company_id), :sheets, sheets)}
       {:error, reason} ->
-        {:ok, assign(:error, reason)}
+        {:ok, socket |> assign(:error, reason)}
     end
   end
 
