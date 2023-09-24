@@ -5,11 +5,10 @@ defmodule SyukatsuSchedulerWeb.SheetLive.Index do
   alias SyukatsuScheduler.EntrySheet.Sheet
 
   @impl true
-  def mount(params, _session, socket) do
-    company_id = params["company_id"]
+  def mount(%{"company_id" => company_id}, _session, socket) do
     case EntrySheet.get_sheets_by_company(company_id) do
       {:ok, sheets} ->
-        {:ok, stream(socket |> assign(:company_id, params["company_id"]), :sheets, sheets)}
+        {:ok, stream(socket |> assign(:company_id, company_id), :sheets, sheets)}
       {:error, reason} ->
         {:ok, assign(:error, reason)}
     end
