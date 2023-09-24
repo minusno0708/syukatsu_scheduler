@@ -2,6 +2,7 @@ defmodule SyukatsuSchedulerWeb.CompanyLive.Show do
   use SyukatsuSchedulerWeb, :live_view
 
   alias SyukatsuScheduler.Accounts
+  alias SyukatsuSchedulerWeb.RenderErrors
 
   @impl true
   def mount(_params, %{"user_token" => user_token}, socket) do
@@ -27,8 +28,7 @@ defmodule SyukatsuSchedulerWeb.CompanyLive.Show do
     else
       {:noreply,
         socket
-        |> assign(:page_title, page_title(socket.assigns.live_action))
-        |> assign(:error, "不正なユーザーによるアクセスです")}
+        |> assign(:error, RenderErrors.render_error(:forbidden))}
     end
   end
 
