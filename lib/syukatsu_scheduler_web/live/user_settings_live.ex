@@ -6,8 +6,8 @@ defmodule SyukatsuSchedulerWeb.UserSettingsLive do
   def render(assigns) do
     ~H"""
     <.header class="text-center">
-      Account Settings
-      <:subtitle>Manage your account email address and password settings</:subtitle>
+      アカウント設定
+      <:subtitle>ユーザー名とパスワードを新しいものに変更できます</:subtitle>
     </.header>
 
     <div class="space-y-12 divide-y">
@@ -24,7 +24,7 @@ defmodule SyukatsuSchedulerWeb.UserSettingsLive do
             name="current_password"
             id="current_password_for_email"
             type="password"
-            label="Current password"
+            label="パスワード"
             value={@email_form_current_password}
             required
           />
@@ -49,23 +49,23 @@ defmodule SyukatsuSchedulerWeb.UserSettingsLive do
             id="hidden_user_email"
             value={@current_email}
           />
-          <.input field={@password_form[:password]} type="password" label="New password" required />
+          <.input field={@password_form[:password]} type="password" label="新しいパスワード" required />
           <.input
             field={@password_form[:password_confirmation]}
             type="password"
-            label="Confirm new password"
+            label="新しいパスワードを再度入力してください"
           />
           <.input
             field={@password_form[:current_password]}
             name="current_password"
             type="password"
-            label="Current password"
+            label="現在のパスワード"
             id="current_password_for_password"
             value={@current_password}
             required
           />
           <:actions>
-            <.button phx-disable-with="Changing...">Change Password</.button>
+            <.button phx-disable-with="Changing...">パスワード変更</.button>
           </:actions>
         </.simple_form>
       </div>
