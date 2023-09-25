@@ -8,13 +8,13 @@ defmodule SyukatsuSchedulerWeb.UserRegistrationLive do
     ~H"""
     <div class="mx-auto max-w-sm">
       <.header class="text-center">
-        Register for an account
+        新規ユーザーを作成
         <:subtitle>
-          Already registered?
+          もし既にユーザーを登録している場合は
           <.link navigate={~p"/users/log_in"} class="font-semibold text-brand hover:underline">
-            Sign in
+            ログイン
           </.link>
-          to your account now.
+          してください
         </:subtitle>
       </.header>
 
@@ -28,15 +28,15 @@ defmodule SyukatsuSchedulerWeb.UserRegistrationLive do
         method="post"
       >
         <.error :if={@check_errors}>
-          Oops, something went wrong! Please check the errors below.
+          入力された情報では登録出来ません。表示されているエラーを確認してください。
         </.error>
 
-        <.input field={@form[:username]} type="text" label="Username" required />
+        <.input field={@form[:username]} type="text" label="ユーザー名" required />
         <.input field={@form[:email]} type="email" label="Email" required />
-        <.input field={@form[:password]} type="password" label="Password" required />
+        <.input field={@form[:password]} type="password" label="パスワード" required />
 
         <:actions>
-          <.button phx-disable-with="Creating account..." class="w-full">Create an account</.button>
+          <.button phx-disable-with="Creating account..." class="w-full">ユーザー登録</.button>
         </:actions>
       </.simple_form>
     </div>
