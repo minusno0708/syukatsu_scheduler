@@ -3,10 +3,3 @@
 @import "tailwindcss/utilities";
 
 /* This file is for your main application CSS */
-.css-main-body {
-    background-color: #f0f0f0; /* 任意の色を設定 */
-}
-
-.css-header {
-    background-color: #8a7a7a; /* 任意の色を設定 */
-}
