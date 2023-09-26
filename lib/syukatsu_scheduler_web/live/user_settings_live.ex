@@ -10,6 +10,18 @@ defmodule SyukatsuSchedulerWeb.UserSettingsLive do
       <:subtitle>ユーザー名とパスワードを新しいものに変更できます</:subtitle>
     </.header>
 
+    <div>
+    現在のユーザー情報
+    <p>
+    ユーザー名
+    <%= @current_user.username %>
+    </p>
+    <p>
+    Email
+    <%= @current_user.email %>
+    </p>
+    </div>
+
     <div class="space-y-12 divide-y">
       <div>
         <.simple_form
