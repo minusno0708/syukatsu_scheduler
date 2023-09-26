@@ -76,4 +76,21 @@ defmodule SyukatsuScheduler.Accounts.UserNotifier do
     ==============================
     """)
   end
+
+  def deliver_update_username_instructions(user, url) do
+    deliver(user.username, "Update username instructions", """
+
+    ==============================
+
+    Hi #{user.username},
+
+    You can change your username by visiting the URL below:
+
+    #{url}
+
+    If you didn't request this change, please ignore this.
+
+    ==============================
+    """)
+  end
 end

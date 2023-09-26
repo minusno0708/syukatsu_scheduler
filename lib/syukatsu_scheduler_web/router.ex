@@ -82,6 +82,7 @@ defmodule SyukatsuSchedulerWeb.Router do
     live_session :require_authenticated_user,
       on_mount: [{SyukatsuSchedulerWeb.UserAuth, :ensure_authenticated}] do
       live "/users/settings", UserSettingsLive, :edit
+      live "/users/settings/confirm_username/:token", UserSettingsLive, :confirm_username
       live "/users/settings/confirm_email/:token", UserSettingsLive, :confirm_email
     end
   end
