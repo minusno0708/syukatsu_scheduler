@@ -10,6 +10,7 @@ defmodule SyukatsuScheduler.Accounts.UserToken do
   # since someone with access to the email may take over the account.
   @reset_password_validity_in_days 1
   @confirm_validity_in_days 7
+  @change_username_validity_in_days 7
   @change_email_validity_in_days 7
   @session_validity_in_days 60
 
@@ -188,6 +189,46 @@ defmodule SyukatsuScheduler.Accounts.UserToken do
         select: user.id
 
     {:ok, query}
+  end
+
+  def build_username_token(user, context) do
+    build_hashed_token(user, context, user.username)
+  end
+
+
+  def verify_username_token_query(token, context) do
+    case Base.url_decode64(token, padding: false) do
+      {:ok, decoded_token} ->
+        hashed_token = :crypto.hash(@hash_algorithm, decoded_token)
+        days = days_for_context(context)
+
+        query =
+          from token in token_and_context_query(hashed_token, context),
+            join: user in assoc(token, :user),
+            where: token.inserted_at > ago(^days, "day") and token.sent_to == user.username,
+            select: user
+
+        {:ok, query}
+
+      :error ->
+        :error
+    end
+  end
+
+  def verify_change_username_token_query(token, "change:" <> _ = context) do
+    case Base.url_decode64(token, padding: false) do
+      {:ok, decoded_token} ->
+        hashed_token = :crypto.hash(@hash_algorithm, decoded_token)
+
+        query =
+          from token in token_and_context_query(hashed_token, context),
+            where: token.inserted_at > ago(@change_username_validity_in_days, "day")
+
+        {:ok, query}
+
+      :error ->
+        :error
+    end
   end
 
 end

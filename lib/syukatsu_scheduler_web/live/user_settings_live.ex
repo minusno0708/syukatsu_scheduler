@@ -10,7 +10,41 @@ defmodule SyukatsuSchedulerWeb.UserSettingsLive do
       <:subtitle>ユーザー名とパスワードを新しいものに変更できます</:subtitle>
     </.header>
 
+    <div>
+    現在のユーザー情報
+    <p>
+    ユーザー名
+    <%= @current_user.username %>
+    </p>
+    <p>
+    Email
+    <%= @current_user.email %>
+    </p>
+    </div>
+
     <div class="space-y-12 divide-y">
+      <div>
+        <.simple_form
+          for={@username_form}
+          id="username_form"
+          phx-submit="update_username"
+          phx-change="validate_username"
+        >
+          <.input field={@username_form[:username]} type="text" label="新しいユーザー名" required />
+          <.input
+            field={@username_form[:current_password]}
+            name="current_password"
+            id="current_password_for_username"
+            type="password"
+            label="パスワード"
+            value={@username_form_current_password}
+            required
+          />
+          <:actions>
+            <.button phx-disable-with="Changing...">ユーザー名変更</.button>
+          </:actions>
+        </.simple_form>
+      </div>
       <div>
         <.simple_form
           for={@email_form}
@@ -88,19 +122,55 @@ defmodule SyukatsuSchedulerWeb.UserSettingsLive do
 
   def mount(_params, _session, socket) do
     user = socket.assigns.current_user
+    username_changeset = Accounts.change_user_username(user)
     email_changeset = Accounts.change_user_email(user)
     password_changeset = Accounts.change_user_password(user)
 
     socket =
       socket
       |> assign(:current_password, nil)
+      |> assign(:username_form_current_password, nil)
       |> assign(:email_form_current_password, nil)
+      |> assign(:current_username, user.username)
       |> assign(:current_email, user.email)
+      |> assign(:username_form, to_form(username_changeset))
       |> assign(:email_form, to_form(email_changeset))
       |> assign(:password_form, to_form(password_changeset))
       |> assign(:trigger_submit, false)
 
     {:ok, socket}
+  end
+
+  def handle_event("validate_username", params, socket) do
+    %{"current_password" => password, "user" => user_params} = params
+
+    username_form =
+      socket.assigns.current_user
+      |> Accounts.change_user_username(user_params)
+      |> Map.put(:action, :validate)
+      |> to_form()
+
+    {:noreply, assign(socket, username_form: username_form, username_form_current_password: password)}
+  end
+
+  def handle_event("update_username", params, socket) do
+    %{"current_password" => password, "user" => user_params} = params
+    user = socket.assigns.current_user
+
+    case Accounts.apply_user_username(user, password, user_params) do
+      {:ok, applied_user} ->
+        Accounts.deliver_user_update_username_instructions(
+          applied_user,
+          user.username,
+          &url(~p"/users/settings/confirm_username/#{&1}")
+        )
+
+        info = "A link to confirm your username change has been sent to the new address."
+        {:noreply, socket |> put_flash(:info, info) |> assign(username_form_current_password: nil)}
+
+      {:error, changeset} ->
+        {:noreply, assign(socket, :username_form, to_form(Map.put(changeset, :action, :insert)))}
+    end
   end
 
   def handle_event("validate_email", params, socket) do
