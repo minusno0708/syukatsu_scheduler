@@ -65,7 +65,6 @@ defmodule SyukatsuScheduler.Accounts.UserToken do
     {:ok, query}
   end
 
-
   @doc """
   Builds a token and its hash to be delivered to the user's email.
 
