@@ -52,7 +52,7 @@ defmodule SyukatsuSchedulerWeb.UserSettingsLive do
           phx-submit="update_email"
           phx-change="validate_email"
         >
-          <.input field={@email_form[:email]} type="email" label="Email" required />
+          <.input field={@email_form[:email]} type="email" label="新しいEmail" required />
           <.input
             field={@email_form[:current_password]}
             name="current_password"
@@ -63,7 +63,7 @@ defmodule SyukatsuSchedulerWeb.UserSettingsLive do
             required
           />
           <:actions>
-            <.button phx-disable-with="Changing...">Change Email</.button>
+            <.button phx-disable-with="Changing...">Email変更</.button>
           </:actions>
         </.simple_form>
       </div>
