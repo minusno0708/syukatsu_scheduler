@@ -47,6 +47,28 @@ defmodule SyukatsuSchedulerWeb.UserSettingsLive do
       </div>
       <div>
         <.simple_form
+          for={@email_form}
+          id="email_form"
+          phx-submit="update_email"
+          phx-change="validate_email"
+        >
+        <.input field={@email_form[:email]} type="email" label="Email" required />
+          <.input
+            field={@email_form[:current_password]}
+            name="current_password"
+            id="current_password_for_email"
+            type="password"
+            label="パスワード"
+            value={@email_form_current_password}
+            required
+          />
+          <:actions>
+            <.button phx-disable-with="Changing...">Change Email</.button>
+          </:actions>
+        </.simple_form>
+      </div>
+      <div>
+        <.simple_form
           for={@password_form}
           id="password_form"
           action={~p"/users/log_in?_action=password_updated"}
@@ -101,14 +123,18 @@ defmodule SyukatsuSchedulerWeb.UserSettingsLive do
   def mount(_params, _session, socket) do
     user = socket.assigns.current_user
     username_changeset = Accounts.change_user_username(user)
+    email_changeset = Accounts.change_user_email(user)
     password_changeset = Accounts.change_user_password(user)
 
     socket =
       socket
       |> assign(:current_password, nil)
       |> assign(:username_form_current_password, nil)
+      |> assign(:email_form_current_password, nil)
+      |> assign(:current_username, user.username)
       |> assign(:current_email, user.email)
       |> assign(:username_form, to_form(username_changeset))
+      |> assign(:email_form, to_form(email_changeset))
       |> assign(:password_form, to_form(password_changeset))
       |> assign(:trigger_submit, false)
 
