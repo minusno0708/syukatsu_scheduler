@@ -52,7 +52,7 @@ defmodule SyukatsuSchedulerWeb.UserSettingsLive do
           phx-submit="update_email"
           phx-change="validate_email"
         >
-          <.input field={@email_form[:email]} type="email" label="Email" required />
+          <.input field={@email_form[:email]} type="email" label="新しいEmail" required />
           <.input
             field={@email_form[:current_password]}
             name="current_password"
@@ -63,7 +63,7 @@ defmodule SyukatsuSchedulerWeb.UserSettingsLive do
             required
           />
           <:actions>
-            <.button phx-disable-with="Changing...">Change Email</.button>
+            <.button phx-disable-with="Changing...">Email変更</.button>
           </:actions>
         </.simple_form>
       </div>
@@ -165,7 +165,7 @@ defmodule SyukatsuSchedulerWeb.UserSettingsLive do
           &url(~p"/users/settings/confirm_username/#{&1}")
         )
 
-        info = "A link to confirm your username change has been sent to the new address."
+        info = "ユーザー名変更の確認メールを送信しました"
         {:noreply, socket |> put_flash(:info, info) |> assign(username_form_current_password: nil)}
 
       {:error, changeset} ->
@@ -197,7 +197,7 @@ defmodule SyukatsuSchedulerWeb.UserSettingsLive do
           &url(~p"/users/settings/confirm_email/#{&1}")
         )
 
-        info = "A link to confirm your email change has been sent to the new address."
+        info = "メールアドレス変更確認のリンクを新しいアドレスに送信しました"
         {:noreply, socket |> put_flash(:info, info) |> assign(email_form_current_password: nil)}
 
       {:error, changeset} ->
