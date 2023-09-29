@@ -99,19 +99,6 @@ defmodule SyukatsuScheduler.Accounts do
     User.username_changeset(user, attrs, validate_username: false)
   end
 
-  def apply_user_username(user, password, attrs) do
-    changeset =
-      user
-      |> User.username_changeset(attrs)
-      |> User.validate_current_password(password)
-      |> Ecto.Changeset.apply_action(:update)
-
-
-    Ecto.Multi.new()
-    |> Ecto.Multi.update(:user, changeset)
-    |> Ecto.Multi.delete_all(:tokens, UserToken.user_and_contexts_query(user, :all))
-  end
-
   def update_user_username(user, password, attrs) do
     changeset =
       user
@@ -127,26 +114,6 @@ defmodule SyukatsuScheduler.Accounts do
       {:error, :user, changeset, _} -> {:error, changeset}
     end
   end
-
-  defp user_username_multi(user, username, context) do
-    changeset =
-      user
-      |> User.username_changeset(%{username: username})
-      |> User.confirm_changeset()
-
-    Ecto.Multi.new()
-    |> Ecto.Multi.update(:user, changeset)
-    |> Ecto.Multi.delete_all(:tokens, UserToken.user_and_contexts_query(user, [context]))
-  end
-
-  def deliver_user_update_username_instructions(%User{} = user, current_username, update_username_url_fun)
-      when is_function(update_username_url_fun, 1) do
-    {encoded_token, user_token} = UserToken.build_username_token(user, "change:#{current_username}")
-
-    Repo.insert!(user_token)
-    UserNotifier.deliver_update_username_instructions(user, update_username_url_fun.(encoded_token))
-  end
-
 
   @doc """
   Returns an `%Ecto.Changeset{}` for changing the user email.
