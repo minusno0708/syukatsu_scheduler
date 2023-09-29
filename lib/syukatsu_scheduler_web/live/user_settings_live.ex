@@ -157,19 +157,17 @@ defmodule SyukatsuSchedulerWeb.UserSettingsLive do
     %{"current_password" => password, "user" => user_params} = params
     user = socket.assigns.current_user
 
-    case Accounts.apply_user_username(user, password, user_params) do
-      {:ok, applied_user} ->
-        Accounts.deliver_user_update_username_instructions(
-          applied_user,
-          user.username,
-          &url(~p"/users/settings/confirm_username/#{&1}")
-        )
+    case Accounts.update_user_username(user, password, user_params) do
+      {:ok, user} ->
+        username_form =
+          user
+          |> Accounts.change_user_username(user_params)
+          |> to_form()
 
-        info = "ユーザー名変更の確認メールを送信しました"
-        {:noreply, socket |> put_flash(:info, info) |> assign(username_form_current_password: nil)}
+        {:noreply, assign(socket, trigger_submit: true, username_form: username_form)}
 
       {:error, changeset} ->
-        {:noreply, assign(socket, :username_form, to_form(Map.put(changeset, :action, :insert)))}
+        {:noreply, assign(socket, username_form: to_form(changeset))}
     end
   end
 
@@ -223,6 +221,8 @@ defmodule SyukatsuSchedulerWeb.UserSettingsLive do
 
     case Accounts.update_user_password(user, password, user_params) do
       {:ok, user} ->
+        IO.puts("--update_user_password--")
+        IO.inspect(user)
         password_form =
           user
           |> Accounts.change_user_password(user_params)

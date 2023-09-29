@@ -100,21 +100,31 @@ defmodule SyukatsuScheduler.Accounts do
   end
 
   def apply_user_username(user, password, attrs) do
-    user
-    |> User.username_changeset(attrs)
-    |> User.validate_current_password(password)
-    |> Ecto.Changeset.apply_action(:update)
+    changeset =
+      user
+      |> User.username_changeset(attrs)
+      |> User.validate_current_password(password)
+      |> Ecto.Changeset.apply_action(:update)
+
+
+    Ecto.Multi.new()
+    |> Ecto.Multi.update(:user, changeset)
+    |> Ecto.Multi.delete_all(:tokens, UserToken.user_and_contexts_query(user, :all))
   end
 
-  def update_user_username(user, token) do
-    context = "change:#{user.username}"
+  def update_user_username(user, password, attrs) do
+    changeset =
+      user
+        |> User.username_changeset(attrs)
+        |> User.validate_current_password(password)
 
-    with {:ok, query} <- UserToken.verify_change_username_token_query(token, context),
-         %UserToken{sent_to: username} <- Repo.one(query),
-         {:ok, _} <- Repo.transaction(user_username_multi(user, username, context)) do
-      :ok
-    else
-      _ -> :error
+    Ecto.Multi.new()
+    |> Ecto.Multi.update(:user, changeset)
+    |> Ecto.Multi.delete_all(:tokens, UserToken.user_and_contexts_query(user, :all))
+    |> Repo.transaction()
+    |> case do
+      {:ok, %{user: user}} -> {:ok, user}
+      {:error, :user, changeset, _} -> {:error, changeset}
     end
   end
 
