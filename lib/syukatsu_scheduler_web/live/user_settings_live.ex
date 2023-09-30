@@ -27,8 +27,11 @@ defmodule SyukatsuSchedulerWeb.UserSettingsLive do
         <.simple_form
           for={@username_form}
           id="username_form"
+          action={~p"/users/log_in?_action=username_updated"}
+          method="post"
           phx-submit="update_username"
           phx-change="validate_username"
+          phx-trigger-action={@trigger_submit}
         >
           <.input field={@username_form[:username]} type="text" label="新しいユーザー名" required />
           <.input
@@ -52,7 +55,7 @@ defmodule SyukatsuSchedulerWeb.UserSettingsLive do
           phx-submit="update_email"
           phx-change="validate_email"
         >
-          <.input field={@email_form[:email]} type="email" label="Email" required />
+          <.input field={@email_form[:email]} type="email" label="新しいEmail" required />
           <.input
             field={@email_form[:current_password]}
             name="current_password"
@@ -63,7 +66,7 @@ defmodule SyukatsuSchedulerWeb.UserSettingsLive do
             required
           />
           <:actions>
-            <.button phx-disable-with="Changing...">Change Email</.button>
+            <.button phx-disable-with="Changing...">Email変更</.button>
           </:actions>
         </.simple_form>
       </div>
@@ -157,19 +160,18 @@ defmodule SyukatsuSchedulerWeb.UserSettingsLive do
     %{"current_password" => password, "user" => user_params} = params
     user = socket.assigns.current_user
 
-    case Accounts.apply_user_username(user, password, user_params) do
-      {:ok, applied_user} ->
-        Accounts.deliver_user_update_username_instructions(
-          applied_user,
-          user.username,
-          &url(~p"/users/settings/confirm_username/#{&1}")
-        )
+    case Accounts.update_user_username(user, password, user_params) do
+      {:ok, user} ->
+        username_form =
+          user
+          |> Accounts.change_user_username(user_params)
+          |> to_form()
 
-        info = "A link to confirm your username change has been sent to the new address."
-        {:noreply, socket |> put_flash(:info, info) |> assign(username_form_current_password: nil)}
+        {:noreply, assign(socket, trigger_submit: true, username_form: username_form)}
+
 
       {:error, changeset} ->
-        {:noreply, assign(socket, :username_form, to_form(Map.put(changeset, :action, :insert)))}
+        {:noreply, assign(socket, username_form: to_form(changeset))}
     end
   end
 
@@ -197,7 +199,7 @@ defmodule SyukatsuSchedulerWeb.UserSettingsLive do
           &url(~p"/users/settings/confirm_email/#{&1}")
         )
 
-        info = "A link to confirm your email change has been sent to the new address."
+        info = "メールアドレス変更確認のリンクを新しいアドレスに送信しました"
         {:noreply, socket |> put_flash(:info, info) |> assign(email_form_current_password: nil)}
 
       {:error, changeset} ->
