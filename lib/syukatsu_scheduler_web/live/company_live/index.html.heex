@@ -21,7 +21,9 @@
   <:col :let={{_id, company}} label="企業名"><%= company.name %></:col>
   <:col :let={{_id, company}} label="現在の状況"><%= company.status %></:col>
   <:col :let={{_id, company}} label="予定"><%= company.schedule %></:col>
-  <:col :let={{_id, company}} label="応募URL"><%= company.url %></:col>
+  <:col :let={{_id, company}} label="応募URL">
+  <a href={company.url} target="_blank"><%= company.url %></a>
+  </:col>
   <:action :let={{_id, company}}>
     <div class="sr-only">
       <.link navigate={~p"/companies/#{company}"}>詳細</.link>
