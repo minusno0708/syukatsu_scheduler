@@ -17,7 +17,9 @@
 <.list>
   <:item title="現在の状況"><%= @company.status %></:item>
   <:item title="予定"><%= @company.schedule %></:item>
-  <:item title="URL"><%= @company.url %></:item>
+  <:item title="URL">
+  <a href={@company.url} target="_blank"><%= @company.url %></a>
+  </:item>
 </.list>
 
 <.back navigate={~p"/#{@company}/sheets"}>ES執筆</.back>
