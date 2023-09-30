@@ -27,8 +27,11 @@ defmodule SyukatsuSchedulerWeb.UserSettingsLive do
         <.simple_form
           for={@username_form}
           id="username_form"
+          action={~p"/users/log_in?_action=username_updated"}
+          method="post"
           phx-submit="update_username"
           phx-change="validate_username"
+          phx-trigger-action={@trigger_submit}
         >
           <.input field={@username_form[:username]} type="text" label="新しいユーザー名" required />
           <.input
@@ -164,7 +167,8 @@ defmodule SyukatsuSchedulerWeb.UserSettingsLive do
           |> Accounts.change_user_username(user_params)
           |> to_form()
 
-        {:noreply, assign(socket, trigger_submit: true, username_form: username_form)}
+        {:noreply, assign(socket, trigger_submit: true, username_form: username_form, current_user: user)}
+
 
       {:error, changeset} ->
         {:noreply, assign(socket, username_form: to_form(changeset))}
@@ -221,8 +225,6 @@ defmodule SyukatsuSchedulerWeb.UserSettingsLive do
 
     case Accounts.update_user_password(user, password, user_params) do
       {:ok, user} ->
-        IO.puts("--update_user_password--")
-        IO.inspect(user)
         password_form =
           user
           |> Accounts.change_user_password(user_params)
