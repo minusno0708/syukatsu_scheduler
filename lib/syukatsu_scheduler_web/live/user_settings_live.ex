@@ -167,7 +167,7 @@ defmodule SyukatsuSchedulerWeb.UserSettingsLive do
           |> Accounts.change_user_username(user_params)
           |> to_form()
 
-        {:noreply, assign(socket, trigger_submit: true, username_form: username_form, current_user: user)}
+        {:noreply, assign(socket, trigger_submit: true, username_form: username_form)}
 
 
       {:error, changeset} ->
