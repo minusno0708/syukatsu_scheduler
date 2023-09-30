@@ -1,18 +1,12 @@
-# SyukatsuScheduler
+# 就活スケジューラー
 
-To start your Phoenix server:
+## 概要
+就職活動のスケジュールを管理するアプリケーションです。
+スケジュールの登録やESのメモなどの機能があります。
 
-  * Run `mix setup` to install and setup dependencies
-  * Start Phoenix endpoint with `mix phx.server` or inside IEx with `iex -S mix phx.server`
+## 起動方法
+下記のコマンドを実行すると、ポート`4000`でアプリケーションが起動します。
+```shell
+$ docker-compose up -d
+```
 
-Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
-
-Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
-
-## Learn more
-
-  * Official website: https://www.phoenixframework.org/
-  * Guides: https://hexdocs.pm/phoenix/overview.html
-  * Docs: https://hexdocs.pm/phoenix
-  * Forum: https://elixirforum.com/c/phoenix-forum
-  * Source: https://github.com/phoenixframework/phoenix
