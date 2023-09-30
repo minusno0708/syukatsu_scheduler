@@ -2,7 +2,7 @@
   <%= @page_title %>
   <:actions>
     <%= if @current_user_id do %>
-      <.link patch={~p"/companies/new"}>
+      <.link patch={~p"/new"}>
         <.button>新規企業</.button>
       </.link>
     <% else %>
@@ -16,7 +16,7 @@
 <.table
   id="companies"
   rows={@streams.companies}
-  row_click={fn {_id, company} -> JS.navigate(~p"/companies/#{company}") end}
+  row_click={fn {_id, company} -> JS.navigate(~p"/#{company}") end}
 >
   <:col :let={{_id, company}} label="企業名"><%= company.name %></:col>
   <:col :let={{_id, company}} label="現在の状況"><%= company.status %></:col>
@@ -26,9 +26,9 @@
   </:col>
   <:action :let={{_id, company}}>
     <div class="sr-only">
-      <.link navigate={~p"/companies/#{company}"}>詳細</.link>
+      <.link navigate={~p"/#{company}"}>詳細</.link>
     </div>
-    <.link patch={~p"/companies/#{company}/edit"}>編集</.link>
+    <.link patch={~p"/#{company}/edit"}>編集</.link>
   </:action>
   <:action :let={{id, company}}>
     <.link
@@ -40,7 +40,7 @@
   </:action>
 </.table>
 
-<.modal :if={@live_action in [:new, :edit]} id="company-modal" show on_cancel={JS.patch(~p"/companies")}>
+<.modal :if={@live_action in [:new, :edit]} id="company-modal" show on_cancel={JS.patch(~p"/")}>
   <.live_component
     module={SyukatsuSchedulerWeb.CompanyLive.FormComponent}
     id={@company.id || :new}
@@ -48,6 +48,6 @@
     action={@live_action}
     company={@company}
     user_id={@current_user_id}
-    patch={~p"/companies"}
+    patch={~p"/"}
   />
 </.modal>
