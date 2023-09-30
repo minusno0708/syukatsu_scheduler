@@ -20,14 +20,14 @@ defmodule SyukatsuSchedulerWeb.Router do
   scope "/", SyukatsuSchedulerWeb do
     pipe_through :browser
 
-    get "/", PageController, :home
+    get "/controller", PageController, :home
 
-    live "/companies", CompanyLive.Index, :index
-    live "/companies/new", CompanyLive.Index, :new
-    live "/companies/:id/edit", CompanyLive.Index, :edit
+    live "/", CompanyLive.Index, :index
+    live "/new", CompanyLive.Index, :new
+    live "/:id/edit", CompanyLive.Index, :edit
 
-    live "/companies/:id", CompanyLive.Show, :show
-    live "/companies/:id/show/edit", CompanyLive.Show, :edit
+    live "/:id", CompanyLive.Show, :show
+    live "/:id/show/edit", CompanyLive.Show, :edit
 
     live "/:company_id/sheets", SheetLive.Index, :index
     live "/:company_id/sheets/new", SheetLive.Index, :new
