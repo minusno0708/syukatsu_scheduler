@@ -18,7 +18,7 @@
   <:item title="現在の状況"><%= @company.status %></:item>
   <:item title="予定"><%= @company.schedule %></:item>
   <:item title="URL">
-  <.link href={@company.url}><%= @company.url %></.link>
+  <a href={@company.url} target="_blank"><%= @company.url %></a>
   </:item>
 </.list>
 
